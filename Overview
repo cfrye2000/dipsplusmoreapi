@@ -5,3 +5,28 @@ Events
 * Modify an Event
 * Delete an Event
 
+Global setup:
+ Set up git
+  git config --global user.name "Your Name"
+  git config --global user.email chris.frye@gmail.com
+      
+Next steps:
+  mkdir dipsplusmoreapi
+  cd dipsplusmoreapi
+  git init
+  touch README
+  git add README
+  git commit -m 'first commit'
+  git remote add origin git@github.com:cfrye2000/dipsplusmoreapi.git
+  git push -u origin master
+      
+Existing Git Repo?
+  cd existing_git_repo
+  git remote add origin git@github.com:cfrye2000/dipsplusmoreapi.git
+  git push -u origin master
+      
+Importing a Subversion Repo?
+  Click here
+      
+When you're done:
+  Continue
