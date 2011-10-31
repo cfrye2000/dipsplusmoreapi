@@ -1,32 +1,23 @@
 Basic API
 
 Events
-* Create an Event
-* Modify an Event
-* Delete an Event
+* Create an Event POST /events/ - returns id {"ok":true, "id":"123BAC"}
+* Modify an Event PUT /events/<id> - {"ok": true}
+* Delete an Event DELETE /events/<id> - {"ok": true}
 
-Global setup:
- Set up git
-  git config --global user.name "Your Name"
-  git config --global user.email chris.frye@gmail.com
+What does an Event Consist of?
+Apr. 1–3 Hoosier Horse Fair & Expo
+publicCanSee: True/False
+startDate: Javascript date
+endDate: Javascript date
+description:  description
       
-Next steps:
-  mkdir dipsplusmoreapi
-  cd dipsplusmoreapi
-  git init
-  touch README
-  git add README
+Github: 
+  git add Filename
   git commit -m 'first commit'
   git remote add origin git@github.com:cfrye2000/dipsplusmoreapi.git
   git push -u origin master
-      
-Existing Git Repo?
-  cd existing_git_repo
-  git remote add origin git@github.com:cfrye2000/dipsplusmoreapi.git
-  git push -u origin master
-      
-Importing a Subversion Repo?
-  Click here
-      
-When you're done:
-  Continue
+
+CouchDB
+http://dipsplusmore.iriscouch.com/_utils/index.html
+cfrye/fatso

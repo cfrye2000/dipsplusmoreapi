@@ -1,12 +1,20 @@
-function start() {
+var request = require('request');
+
+function start(callback) {
   console.log("Request handler 'start' was called.");
-  return "Hello Start";
+  callback("Hello Start");
+  
 }
 
-function upload() {
-  console.log("Request handler 'upload' was called.");
-  return "Hello Upload";
+function events(callback) {
+  request('http://dipsplusmore.iriscouch.com/events/', function (error, response, body) {
+  if (!error && response.statusCode == 200) {
+    callback(body);
+  } else {
+    callback(error);
+  }
+});
 }
 
 exports.start = start;
-exports.upload = upload;
+exports.events = events;
