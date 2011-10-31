@@ -9,9 +9,13 @@ function start(callback) {
 function events(callback) {
   request('http://dipsplusmore.iriscouch.com/events/', function (error, response, body) {
   if (!error && response.statusCode == 200) {
-    callback(body);
+    if (body !== null){
+        callback(body);
+    } else {
+        callback("nothing returned");
+    }
   } else {
-    callback(error);
+    callback(response.statusCode + ": events db error");
   }
 });
 }
