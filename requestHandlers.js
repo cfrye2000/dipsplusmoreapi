@@ -1,4 +1,4 @@
-var request = require('request');
+var eventsDAO = require('./eventsDAO');
 
 function start(callback) {
   console.log("Request handler 'start' was called.");
@@ -7,17 +7,7 @@ function start(callback) {
 }
 
 function events(callback) {
-  request('http://dipsplusmore.iriscouch.com/events/', function (error, response, body) {
-  if (!error && response.statusCode == 200) {
-    if (body !== null){
-        callback(body);
-    } else {
-        callback("nothing returned");
-    }
-  } else {
-    callback(response.statusCode + ": events db error");
-  }
-});
+    eventsDAO.events(callback);
 }
 
 exports.start = start;
