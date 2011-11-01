@@ -17,16 +17,16 @@ handle.search = requestHandlers.search;
 server.start(router.route, handle);
 
 //first basic test
-request('http://dipsandmoreapi.cfrye2000.c9.com/', function (error, response, body) {
+request('http://dipsandmoreapi.cfrye2000.c9.io/', function (error, response, body) {
   if (!error && response.statusCode == 200) {
     assert.ok(response.statusCode == 200);
   }
 });
 
 //test not found
-request('http://dipsandmoreapi.cfrye2000.c9.com/lisa', function (error, response, body) {
+request('http://dipsandmoreapi.cfrye2000.c9.io/lisa', function (error, response, body) {
   if (!error && response.statusCode == 200) {
-    assert.ok(body == '/lisa Not found');
+    assert.ok(body == 'lisa Not found');
   }
 });
 

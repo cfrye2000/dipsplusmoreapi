@@ -15,7 +15,8 @@ function events(queryString, callback) {
 
 function search(queryString, callback) {
      console.log('queryString: ' + queryString);
-     var fromLang = unescape(queryString[0])
+     //query string is formed like this "search/fr/query"
+     var fromLang = unescape(queryString[0]);
      var query = unescape(queryString[1]);
      console.log('query: ' + query);
      if (query === null){
@@ -35,7 +36,7 @@ function search(queryString, callback) {
             callback("nothing returned");
         }
       } else {
-        callback(response.statusCode + ": events db error");
+        callback(response.statusCode + ": translation error - poorly formed URL");
       }
     });
 }
