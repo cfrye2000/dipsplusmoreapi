@@ -1,19 +1,52 @@
 var eventsDAO = require('./eventsDAO');
 var request = require('request');
+var querystring = require("querystring");
 
 
-function start(callback) {
+function start(queryString, callback) {
   console.log("Request handler 'start' was called.");
   callback("Hello Start");
   
 }
 
-function events(callback) {
+function events(queryString, callback) {
     eventsDAO.events(callback);
 }
 
-function translate(callback) {
-     request('https://www.googleapis.com/language/translate/v2?key=AIzaSyB_TAdGIdZnB-n9IJbMrgYh-IMnYSyKQu0&source=en&target=de&q=Hello%20world', function (error, response, body) {
+function search(queryString, callback) {
+     console.log('queryString: ' + queryString);
+     var fromLang = unescape(queryString[0])
+     var query = unescape(queryString[1]);
+     console.log('query: ' + query);
+     if (query === null){
+         query = "";
+     }
+     
+     var requestString = 'https://www.googleapis.com/language/translate/v2?key=AIzaSyB_TAdGIdZnB-n9IJbMrgYh-IMnYSyKQu0&target=en&' + querystring.stringify({"source" : fromLang, "q" : query});
+     console.log('requesting: ' + requestString);
+     
+     request(requestString, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        if (body !== null){
+            var result = JSON.parse(body);
+            var query = result.data.translations[0].translatedText;
+            doSearch(query, callback);
+        } else {
+            callback("nothing returned");
+        }
+      } else {
+        callback(response.statusCode + ": events db error");
+      }
+    });
+}
+
+function doSearch(queryString, callback) {
+     
+     
+     var requestString = 'http://api.crateandbarrel.com/APIHandler.ashx?pid=$qu1rr3lE@t3r&action=search&' + querystring.stringify({"q" : queryString});
+     console.log('requesting: ' + requestString);
+     
+     request(requestString, function (error, response, body) {
       if (!error && response.statusCode == 200) {
         if (body !== null){
             callback(body);
@@ -28,4 +61,4 @@ function translate(callback) {
 
 exports.start = start;
 exports.events = events;
-exports.translate = translate;
+exports.search = search;
