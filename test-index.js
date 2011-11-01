@@ -11,6 +11,8 @@ var handle = {};
 handle["/"] = requestHandlers.start;
 handle["/start"] = requestHandlers.start;
 handle["/events"] = requestHandlers.events;
+handle["/translate"] = requestHandlers.translate;
+
 
 server.start(router.route, handle);
 
