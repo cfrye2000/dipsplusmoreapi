@@ -7,6 +7,8 @@ var server;
 function start(route, handle) {
   function onRequest(request, response) {
     console.log("Request received.");
+    var httpMethod = request.method;
+    console.log("http method: " + httpMethod);
     var pathname = url.parse(request.url).pathname;
     var splitPathname = pathname.split("/");
      console.log("full request" + splitPathname);
@@ -17,14 +19,26 @@ function start(route, handle) {
         queryString = [];
     }
     console.log("Request for " + action + " and " + queryString);
+    var postData ='';
+    request.setEncoding("utf8");
 
-    response.writeHead(200, {"Content-Type": "text/plain"});
-    route(handle, action, queryString, function(content){
-        response.write(content);
-        response.end();
-        
+    request.addListener("data", function(postDataChunk) {
+      postData += postDataChunk;
+      console.log("Received POST data chunk '"+
+      postDataChunk + "'.");
     });
     
+    console.log("Request for " + action + " and " + queryString + "and post data " + postData);
+
+
+    response.writeHead(200, {"Content-Type": "text/plain"});
+    request.addListener("end", function() {
+        route(handle, httpMethod, action, queryString, postData, function(content){
+            response.write(content);
+            response.end();
+            
+        });
+    });
   }
 
   server =  http.createServer(onRequest);

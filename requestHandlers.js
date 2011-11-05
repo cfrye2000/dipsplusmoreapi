@@ -3,17 +3,25 @@ var request = require('request');
 var querystring = require("querystring");
 
 
-function start(queryString, callback) {
+function start(httpMethod, queryString, postData, callback) {
   console.log("Request handler 'start' was called.");
   callback("Hello Start");
   
 }
 
-function events(queryString, callback) {
-    eventsDAO.events(callback);
+function events(httpMethod, queryString, postData, callback) {
+    if (httpMethod === 'GET'){
+        eventsDAO.getEvents(callback);
+    } else if (httpMethod === 'POST'){
+        eventDAO.postEvent(postData, callback);
+    } else {
+        callback("HTTP Method: " + httpMethod + " is not supported");
+    }
+    
 }
 
-function search(queryString, callback) {
+
+function search(httpMethod,queryString, postData, callback) {
      console.log('queryString: ' + queryString);
      //query string is formed like this "search/fr/query"
      var fromLang = unescape(queryString[0]);
