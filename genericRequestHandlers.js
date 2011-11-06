@@ -10,7 +10,7 @@ function processRequest(container, httpMethod, action, queryString, postData, ca
     if (httpMethod === 'GET'){
         genericDAO.getAll(container, action, callback);
     } else if (httpMethod === 'POST'){
-        eventDAO.post(container, action, postData, callback);
+        genericDAO.post(container, action, postData, callback);
     } else {
         callback("HTTP Method: " + httpMethod + " is not supported");
     }

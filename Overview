@@ -2,6 +2,8 @@ Basic API
 
 Events
 * Create an Event POST /events/ - returns id {"ok":true, "id":"123BAC"}
+curl -X POST http://dipsandmoreapi.cfrye2000.cloud9ide.com/events -H "Content-Type: application/json" -d '{"description":"Test Name", "publicCanSee":false}' 
+
 * Modify an Event PUT /events/<id> - {"ok": true}
 * Delete an Event DELETE /events/<id> - {"ok": true}
 

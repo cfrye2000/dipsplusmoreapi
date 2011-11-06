@@ -20,4 +20,29 @@ function getAll(container, action, callback) {
     });
 }
 
+function post(container, action, postData, callback) {
+    var j = JSON.parse(postData);
+    var s = JSON.stringify(j);
+    var u = container.dbURL + action;
+    console.log('about to post: ' + s + ' to ' + u);
+  request(
+    {method: 'POST',
+     uri: u,
+     json: s,
+     'content-type': 'application/json'
+    },
+    function (error, response, body) {
+      if (!error && response.statusCode == 201) {
+        if (body !== null){
+            callback(body);
+        } else {
+            callback("nothing returned");
+        }
+      } else {
+        callback(response.statusCode + ": " + action + " db error" + body);
+      }
+    });
+}
+
 exports.getAll = getAll;
+exports.post = post;
