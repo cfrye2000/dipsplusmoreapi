@@ -4,7 +4,7 @@ var url = require("url");
 var server;
 
 
-function start(route, handle) {
+function start(route, container) {
   function onRequest(request, response) {
     console.log("Request received.");
     var httpMethod = request.method;
@@ -33,7 +33,7 @@ function start(route, handle) {
 
     response.writeHead(200, {"Content-Type": "text/plain"});
     request.addListener("end", function() {
-        route(handle, httpMethod, action, queryString, postData, function(content){
+        route(container, httpMethod, action, queryString, postData, function(content){
             response.write(content);
             response.end();
             
