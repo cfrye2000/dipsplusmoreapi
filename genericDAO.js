@@ -22,24 +22,29 @@ function getAll(container, action, callback) {
 
 function post(container, action, postData, callback) {
     var j = JSON.parse(postData);
+    //validate postData
     var s = JSON.stringify(j);
     var u = container.dbURL + action;
     console.log('about to post: ' + s + ' to ' + u);
-  request(
-    {method: 'POST',
-     uri: u,
-     json: s,
-     'content-type': 'application/json'
+  request.post(
+    {uri: u,
+     body: s,
+     headers: {'content-type' : 'application/json'}
     },
     function (error, response, body) {
       if (!error && response.statusCode == 201) {
         if (body !== null){
-            callback(body);
+            var result = {};
+            var bodyJSON = JSON.parse(body);
+            result.ok = bodyJSON.ok;
+            result.id = bodyJSON.id;
+            callback(JSON.stringify(result));
         } else {
             callback("nothing returned");
         }
       } else {
-        callback(response.statusCode + ": " + action + " db error" + body);
+        console.log(response.statusCode + body.toString());
+        callback(response.statusCode + ": " + action + " db error: " + body.toString());
       }
     });
 }
