@@ -12,13 +12,13 @@ function start(route, container) {
     var pathname = url.parse(request.url).pathname;
     var splitPathname = pathname.split("/");
      console.log("full request" + splitPathname);
-    var action = splitPathname[1];
+    var resource = splitPathname[1];
     splitPathname.splice(0,2);
     var queryString = splitPathname;
     if (queryString === null){
         queryString = [];
     }
-    console.log("Request for " + action + " and " + queryString);
+    console.log("Request for " + resource + " and " + queryString);
     var postData ='';
     request.setEncoding("utf8");
 
@@ -28,12 +28,12 @@ function start(route, container) {
       postDataChunk + "'.");
     });
     
-    console.log("Request for " + action + " and " + queryString + "and post data " + postData);
+    console.log("Request for " + resource + " and " + queryString + "and post data " + postData);
 
 
     response.writeHead(200, {"Content-Type": "text/plain"});
     request.addListener("end", function() {
-        route(container, httpMethod, action, queryString, postData, function(content){
+        route(container, httpMethod, resource, queryString, postData, function(content){
             response.write(content);
             response.end();
             

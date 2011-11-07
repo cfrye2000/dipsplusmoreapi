@@ -12,15 +12,15 @@ var
 var container = {};
 container.dbURL = 'http://chrisfrye.iriscouch.com/';
 
-//handlers by action
-var handle = {};
-handle[""] =  genericRequestHandlers.ping;
-handle.ping = genericRequestHandlers.ping;
-handle.events = genericRequestHandlers.processRequest;
-handle.chris = genericRequestHandlers.processRequest;
-handle.search = requestHandlers.search;
+//resourcers by action
+var resource = {};
+resource[""] =  genericRequestHandlers.ping;
+resource.ping = genericRequestHandlers.ping;
+resource.events = genericRequestHandlers.processRequest;
+resource.chris = genericRequestHandlers.processRequest;
+resource.search = requestHandlers.search;
 
-container.handlers = handle;
+container.resources = resource;
 
 
 //incoming data validators by action

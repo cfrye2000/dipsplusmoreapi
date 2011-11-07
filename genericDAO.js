@@ -1,8 +1,8 @@
 var request = require('request');
 
 
-function getAll(container, action, callback) {
-  request(container.dbURL + '/' + action + '/_all_docs?include_docs=true', function (error, response, body) {
+function getAll(container, resource, callback) {
+  request(container.dbURL + '/' + resource + '/_all_docs?include_docs=true', function (error, response, body) {
       if (!error && response.statusCode == 200) {
         if (body !== null){
             var result = JSON.parse(body);
@@ -15,16 +15,16 @@ function getAll(container, action, callback) {
             callback("nothing returned");
         }
       } else {
-        callback(response.statusCode + ": " + action + " db error");
+        callback(response.statusCode + ": " + resource + " db error");
       }
     });
 }
 
-function post(container, action, postData, callback) {
+function post(container, resource, postData, callback) {
     var j = JSON.parse(postData);
     //validate postData
     var s = JSON.stringify(j);
-    var u = container.dbURL + action;
+    var u = container.dbURL + resource;
     console.log('about to post: ' + s + ' to ' + u);
   request.post(
     {uri: u,
@@ -44,7 +44,7 @@ function post(container, action, postData, callback) {
         }
       } else {
         console.log(response.statusCode + body.toString());
-        callback(response.statusCode + ": " + action + " db error: " + body.toString());
+        callback(response.statusCode + ": " + resource + " db error: " + body.toString());
       }
     });
 }
