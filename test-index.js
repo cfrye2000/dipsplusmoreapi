@@ -5,12 +5,14 @@ var
   router = require("./router"),
   requestHandlers = require('./requestHandlers'),
   genericRequestHandlers = require('./genericRequestHandlers'),
+  eventsDAO = require('./eventsDAO'),
   request = require('request');
   
 // dependency injection container
 var container = {};
 container.dbURL = 'http://chrisfrye.iriscouch.com/';
 
+//handlers by action
 var handle = {};
 handle[""] =  genericRequestHandlers.ping;
 handle.ping = genericRequestHandlers.ping;
@@ -19,6 +21,13 @@ handle.chris = genericRequestHandlers.processRequest;
 handle.search = requestHandlers.search;
 
 container.handlers = handle;
+
+
+//incoming data validators by action
+var validators = {};
+validators.events = eventsDAO.validateEvent;
+
+container.validators = validators;
 
 
 server.start(router.route, container);
