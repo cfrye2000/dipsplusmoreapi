@@ -2,7 +2,7 @@ var genericDAO = require('./genericDAO');
 
 function ping(container, httpMethod, resource, queryString, postData, callback){
     console.log("Request handler 'ping' was called.");
-    callback('Ping!');
+    callback(JSON.stringify({"ok" : true, message : "PING!"}));
 }
 
 
@@ -16,12 +16,12 @@ function processRequest(container, httpMethod, resource, queryString, postData, 
             if (returnJSON.ok !== undefined && returnJSON.ok){
                 genericDAO.post(container, resource, postData, callback);
             } else {
-                callback(JSON.stringify(returnJSON));
+                callback(container.errorFormatter(false, returnJSON));
             }
         });
         
     } else {
-        callback("HTTP Method: " + httpMethod + " is not supported");
+        callback(container.errorFormatter(false, {HTTPMethodNotSupported : httpMethod}));
     }
     
 }

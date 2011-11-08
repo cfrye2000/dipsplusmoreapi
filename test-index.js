@@ -25,7 +25,7 @@ request('http://dipsandmoreapi.cfrye2000.c9.io/', function (error, response, bod
 //test not found
 request('http://dipsandmoreapi.cfrye2000.c9.io/lisa', function (error, response, body) {
   if (!error && response.statusCode == 200) {
-    assert.ok(body == 'lisa Not found');
+    assert.ok(body == '{"okay":false,"messages":{"notFound":"lisa"}}');
   }
 });
 

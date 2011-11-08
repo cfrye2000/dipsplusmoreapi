@@ -12,7 +12,7 @@ function getAll(container, resource, callback) {
             }
             callback(JSON.stringify(results));
         } else {
-            callback("nothing returned");
+            callback(container.errorFormatter(false, {response : "empty"}));
         }
       } else {
         callback(response.statusCode + ": " + resource + " db error");
@@ -40,7 +40,7 @@ function post(container, resource, postData, callback) {
             result.id = bodyJSON.id;
             callback(JSON.stringify(result));
         } else {
-            callback("nothing returned");
+            callback(container.errorFormatter(false, {response : "empty"}));
         }
       } else {
         console.log(response.statusCode + body.toString());

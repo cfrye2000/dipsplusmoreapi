@@ -7,6 +7,7 @@ function build(){
     // dependency injection container
     var container = {};
     container.dbURL = 'http://chrisfrye.iriscouch.com/';
+    container.errorFormatter = errorFormatter;
     
     //resourcers by action
     var resource = {};
@@ -26,5 +27,15 @@ function build(){
     container.validators = validators;
     return container;
 }
+
+
+var errorFormatter = function (okay, messages){
+    var result = {};
+    result.okay = okay;
+    result.messages = messages;
+    return JSON.stringify(result);
+};
+
+
 
 exports.build = build;

@@ -4,7 +4,7 @@ function route(container, httpMethod, resource, queryString, postData, callback 
     return container.resources[resource](container, httpMethod, resource, queryString, postData, callback);
   } else {
     console.log("No request handler found for " + resource);
-    callback(resource + " Not found");
+    callback(container.errorFormatter(false, {notFound : resource}));
   }
 }
 
