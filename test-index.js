@@ -3,34 +3,17 @@ var
   http = require('http'),
   server = require('./server'),
   router = require("./router"),
-  requestHandlers = require('./requestHandlers'),
-  genericRequestHandlers = require('./genericRequestHandlers'),
-  eventsDAO = require('./eventsDAO'),
+  module = require('./module');
   request = require('request');
   
 // dependency injection container
-var container = {};
-container.dbURL = 'http://chrisfrye.iriscouch.com/';
+var container = module.build();
 
-//resourcers by action
-var resource = {};
-resource[""] =  genericRequestHandlers.ping;
-resource.ping = genericRequestHandlers.ping;
-resource.events = genericRequestHandlers.processRequest;
-resource.chris = genericRequestHandlers.processRequest;
-resource.search = requestHandlers.search;
-
-container.resources = resource;
-
-
-//incoming data validators by action
-var validators = {};
-validators.events = eventsDAO.validateEvent;
-
-container.validators = validators;
-
-
+//start the server
 server.start(router.route, container);
+
+
+//**** Tests ******//
 
 //first basic test
 request('http://dipsandmoreapi.cfrye2000.c9.io/', function (error, response, body) {
